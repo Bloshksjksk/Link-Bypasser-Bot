@@ -18,10 +18,10 @@ from time import time
 with open('config.json', 'r') as f: DATA = load(f)
 def getenv(var): return environ.get(var) or DATA.get(var, None)
 
-bot_token = getenv("TOKEN","6434837886:AAEcF3PP64wNIdYPhedI8_IYUXvfuYibVcM")
-api_hash = getenv("HASH","3eba5d471162181b8a3f7f5c0a23c307") 
-api_id = getenv("ID",4682685)
-ADMINS= int(getenv("ADMINS","945284066"))
+bot_token = getenv("TOKEN")
+api_hash = getenv("HASH")
+api_id = getenv("ID")
+ADMINS= int(getenv("ADMINS"))
 CHANNEL_ID = -1001678093514
 app = Client("my_bot",api_id=api_id, api_hash=api_hash,bot_token=bot_token)  
 mongo_client = pymongo.MongoClient("mongodb+srv://misoc51233:i1ko1lV8fOryGyrv@cluster0.dmus3p9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
