@@ -24,7 +24,7 @@ api_id = getenv("ID")
 ADMINS= int(getenv("ADMINS"))
 CHANNEL_ID = -1001678093514
 app = Client("my_bot",api_id=api_id, api_hash=api_hash,bot_token=bot_token)  
-mongo_client = pymongo.MongoClient("mongodb://localhost:27017")
+mongo_client = pymongo.MongoClient("mongodb+srv://misoc51233:i1ko1lV8fOryGyrv@cluster0.dmus3p9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 db = mongo_client.my_database
 users_collection = db.users
 
