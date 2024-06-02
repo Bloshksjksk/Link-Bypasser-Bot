@@ -12,7 +12,7 @@ import freewall
 from time import time
 
 
-# bot
+# botTRUMBOT
 with open('config.json', 'r') as f: DATA = load(f)
 def getenv(var): return environ.get(var) or DATA.get(var, None)
 
