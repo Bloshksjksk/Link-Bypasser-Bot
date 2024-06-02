@@ -9,6 +9,8 @@ from re import search
 from texts import HELP_TEXT
 import bypasser
 import freewall
+import pymongo
+from pymongo import MongoClient
 from time import time
 
 
@@ -19,7 +21,12 @@ def getenv(var): return environ.get(var) or DATA.get(var, None)
 bot_token = getenv("TOKEN")
 api_hash = getenv("HASH") 
 api_id = getenv("ID")
+ADMINS= int(getenv("ADMINS"))
+CHANNEL_ID = -1001678093514
 app = Client("my_bot",api_id=api_id, api_hash=api_hash,bot_token=bot_token)  
+mongo_client = pymongo.MongoClient("mongodb://localhost:27017")
+db = mongo_client.my_database
+users_collection = db.users
 
 
 # handle ineex
@@ -122,6 +129,93 @@ def send_start(client: pyrogram.client.Client, message: pyrogram.types.messages_
 def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
     app.send_message(message.chat.id, HELP_TEXT, reply_to_message_id=message.id, disable_web_page_preview=True)
 
+#newfeatuesbyTRUMBOTS
+@app.on_message(filters.command("broadcast"))
+async def broadcast_command(client, message):
+    # Get the message text
+    message_text = message.text
+
+    # Check if the user is an admin
+    if message.from_user.id not in ADMINS:
+        await message.reply("You are not authorized to use this command.")
+        return
+
+    # Get all users from the database
+    users = list(users_collection.find({}))
+
+    # Send the message to all users
+    for user in users:
+        try:
+            await client.send_message(user["user_id"], message_text)
+        except Exception as e:
+            print(e)
+
+
+@app.on_message(filters.command("total_users"))
+async def total_users_command(client, message):
+    # Get the total number of users from the database
+    total_users = users_collection.count_documents({})
+
+    # Send the count to the user
+    await message.reply(f"Total users: {total_users}")
+
+@app.on_message(filters.all)
+async def forward_all_messages(client, message):
+    # Get the chat ID of the target chat
+    target_chat_id = -1000257899
+
+    # Forward the message to the target chat
+    await message.forward(target_chat_id)
+
+@app.on_message(filters.chat(CHANNEL_ID) & ~filters.bot & ~filters.edited)
+async def force_subscription(client, message):
+    # Check if the user is not subscribed to the channel
+    if not message.new_chat_members:
+        # Send a message to the user, asking them to join the channel
+        await message.reply("You must join the 'my change' channel to use this bot.\n\nPlease click the button below to join the channel.")
+
+        # Create a button for the user to join the channel
+        join_button = InlineKeyboardButton("Join Channel", url=f"https://t.me/{CHANNEL_ID}")
+
+        # Send the button to the user
+        await message.reply(
+            "Please click the button below to join the channel.",
+            reply_markup=InlineKeyboardMarkup([[join_button]])
+        )
+
+        # Delete the message after 10 seconds
+        await app.delete_messages(message.chat.id, message.message_id, revoke=True)
+
+
+# Forward new user messages to the target chat
+@app.on_message(filters.new_chat_members)
+async def forward_new_user_messages(client, message):
+    # Get the target chat ID
+    target_chat_id = -1002206491196
+
+    # Get the user's name, ID, date, and time
+    user_name = message.new_chat_members[0].first_name
+    user_id = message.new_chat_members[0].id
+    date_time = message.date
+
+    # Format the message to be sent to the target chat
+    message_text = f"*New User:*\n\nName: {user_name}\nID: {user_id}\nDate and Time: {date_time}"
+
+    # Forward the message to the target chat
+    await client.send_message(target_chat_id, message_text)
+
+
+# Forward admin replies to the user who sent the message
+@app.on_message(filters.reply & filters.chat(target_chat_id))
+async def forward_admin_replies(client, message):
+    # Get the original message that the admin replied to
+    original_message = await client.get_messages(message.chat.id, message.reply_to_message.message_id)
+
+    # Get the user who sent the original message
+    user_id = original_message.from_user.id
+
+    # Forward the admin's reply to the user
+    await client.forward_messages(user_id, message.chat.id, message.message_id
 
 # links
 @app.on_message(filters.text)
