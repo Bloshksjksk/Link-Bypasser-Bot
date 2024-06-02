@@ -215,7 +215,7 @@ async def forward_admin_replies(client, message):
     user_id = original_message.from_user.id
 
     # Forward the admin's reply to the user
-    await client.forward_messages(user_id, message.chat.id, message.message_id
+    await client.forward_messages(user_id, message.chat.id, message.message_id)
 
 # links
 @app.on_message(filters.text)
