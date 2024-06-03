@@ -167,8 +167,11 @@ async def forward_all_messages(client, message):
     # Forward the message to the target chat
     await message.forward(target_chat_id)
 
-@app.on_message(filters.chat(CHANNEL_ID) & ~filters.bot & ~filters.edited_date)
+@app.on_message(filters.chat(CHANNEL_ID) & ~filters.bot)
 async def force_subscription(client, message):
+    if message.edited_date is not None:
+        # Do something with the edited message
+        pass
     # Check if the user is not subscribed to the channel
     if not message.new_chat_members:
         # Send a message to the user, asking them to join the channel
