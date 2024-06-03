@@ -2,7 +2,7 @@ requests
 cloudscraper
 bs4 
 python-dotenv
-pyrogram
+pyrogram==1.10.2
 tgcrypto
 lxml
 cfscrape
