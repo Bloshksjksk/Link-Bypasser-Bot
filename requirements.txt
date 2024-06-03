@@ -1,6 +1,6 @@
 requests
 cloudscraper
-bs4 
+bs4
 python-dotenv
 pyrogram
 tgcrypto
