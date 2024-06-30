@@ -125,14 +125,14 @@ async def is_member(client, user_id):
 
 # start command
 @app.on_message(filters.command(["start"]))
-async def send_start(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+def send_start(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
     if not is_member:
         join_button = InlineKeyboardButton("ᴊᴏɪɴ ❤️🚀", url="https://t.me/movie_time_botonly") #add your force subchannel url
         reply_markup = InlineKeyboardMarkup([[join_button]])
-        await message.reply_text("😈ʏᴏᴜ ᴍᴜsᴛ ᴊᴏɪɴ ᴍʏ ᴄʜᴀɴɴᴇʟ ᴛᴏ ᴜsᴇ ᴍᴇ😈.", reply_markup=reply_markup)
+        message.reply_text("😈ʏᴏᴜ ᴍᴜsᴛ ᴊᴏɪɴ ᴍʏ ᴄʜᴀɴɴᴇʟ ᴛᴏ ᴜsᴇ ᴍᴇ😈.", reply_markup=reply_markup)
         return 
         
-    app.send_message(message.chat.id, f"__👋 Hi **{message.from_user.mention}**, i am Link Bypasser Bot, just send me any supported links and i will you get you results.\nCheckout /help to Read More__",
+    await app.send_message(message.chat.id, f"__👋 Hi **{message.from_user.mention}**, i am Link Bypasser Bot, just send me any supported links and i will you get you results.\nCheckout /help to Read More__",
     reply_markup=InlineKeyboardMarkup([
         [ InlineKeyboardButton("🌐 Source Code", url="https://t.me/+PBumvx-e43I4ZTE1")],
         [ InlineKeyboardButton("MAIN CHANNEL", url="https://t.me/+PBumvx-e43I4ZTE1") ]]), 
@@ -141,33 +141,33 @@ async def send_start(client: pyrogram.client.Client, message: pyrogram.types.mes
 
 # help command
 @app.on_message(filters.command(["help"]))
-async def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
     if not is_member:
         join_button = InlineKeyboardButton("ᴊᴏɪɴ ❤️🚀", url="https://t.me/movie_time_botonly") #add your force subchannel url
         reply_markup = InlineKeyboardMarkup([[join_button]])
-        await message.reply_text("😈ʏᴏᴜ ᴍᴜsᴛ ᴊᴏɪɴ ᴍʏ ᴄʜᴀɴɴᴇʟ ᴛᴏ ᴜsᴇ ᴍᴇ😈.", reply_markup=reply_markup)
+        message.reply_text("😈ʏᴏᴜ ᴍᴜsᴛ ᴊᴏɪɴ ᴍʏ ᴄʜᴀɴɴᴇʟ ᴛᴏ ᴜsᴇ ᴍᴇ😈.", reply_markup=reply_markup)
         return 
-    app.send_message(message.chat.id, HELP_TEXT, reply_to_message_id=message.id, disable_web_page_preview=True)
+    await app.send_message(message.chat.id, HELP_TEXT, reply_to_message_id=message.id, disable_web_page_preview=True)
 
 
 # links
 @app.on_message(filters.text)
-async def receive(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+def receive(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
     if not is_member:
         join_button = InlineKeyboardButton("ᴊᴏɪɴ ❤️🚀", url="https://t.me/movie_time_botonly") #add your force subchannel url
         reply_markup = InlineKeyboardMarkup([[join_button]])
-        await message.reply_text("😈ʏᴏᴜ ᴍᴜsᴛ ᴊᴏɪɴ ᴍʏ ᴄʜᴀɴɴᴇʟ ᴛᴏ ᴜsᴇ ᴍᴇ😈.", reply_markup=reply_markup)
+        message.reply_text("😈ʏᴏᴜ ᴍᴜsᴛ ᴊᴏɪɴ ᴍʏ ᴄʜᴀɴɴᴇʟ ᴛᴏ ᴜsᴇ ᴍᴇ😈.", reply_markup=reply_markup)
         return 
     bypass = Thread(target=lambda:loopthread(message),daemon=True)
     bypass.start()
 
 
 # doc thread
-async def docthread(message):
+def docthread(message):
     if not is_member:
         join_button = InlineKeyboardButton("ᴊᴏɪɴ ❤️🚀", url="https://t.me/movie_time_botonly") #add your force subchannel url
         reply_markup = InlineKeyboardMarkup([[join_button]])
-        await message.reply_text("😈ʏᴏᴜ ᴍᴜsᴛ ᴊᴏɪɴ ᴍʏ ᴄʜᴀɴɴᴇʟ ᴛᴏ ᴜsᴇ ᴍᴇ😈.", reply_markup=reply_markup)
+        message.reply_text("😈ʏᴏᴜ ᴍᴜsᴛ ᴊᴏɪɴ ᴍʏ ᴄʜᴀɴɴᴇʟ ᴛᴏ ᴜsᴇ ᴍᴇ😈.", reply_markup=reply_markup)
         return 
     msg = app.send_message(message.chat.id, "🔎 __bypassing...__", reply_to_message_id=message.id)
     print("sent DLC file")
@@ -180,11 +180,11 @@ async def docthread(message):
 
 # files
 @app.on_message([filters.document,filters.photo,filters.video])
-async def docfile(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+def docfile(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
     if not is_member:
         join_button = InlineKeyboardButton("ᴊᴏɪɴ ❤️🚀", url="https://t.me/movie_time_botonly") #add your force subchannel url
         reply_markup = InlineKeyboardMarkup([[join_button]])
-        await message.reply_text("😈ʏᴏᴜ ᴍᴜsᴛ ᴊᴏɪɴ ᴍʏ ᴄʜᴀɴɴᴇʟ ᴛᴏ ᴜsᴇ ᴍᴇ😈.", reply_markup=reply_markup)
+        message.reply_text("😈ʏᴏᴜ ᴍᴜsᴛ ᴊᴏɪɴ ᴍʏ ᴄʜᴀɴɴᴇʟ ᴛᴏ ᴜsᴇ ᴍᴇ😈.", reply_markup=reply_markup)
         return 
     
     try:
