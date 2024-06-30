@@ -108,9 +108,9 @@ def loopthread(message,otherss=False):
         app.send_message(message.chat.id, f"__Failed to Bypass : {e}__", reply_to_message_id=message.id)
         
 
-async def is_member(client, user_id):
+def is_member(client, user_id):
     try:
-        member = await client.get_chat_member(fsub_id, user_id)
+        member = client.get_chat_member(fsub_id, user_id)
         logging.info(f"User {user_id} membership status: {member.status}")
         if member.status in [ChatMemberStatus.MEMBER, ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.OWNER]:
             return True
