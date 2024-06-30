@@ -1,5 +1,6 @@
 import pyrogram
 import asyncio
+import logging
 from pyrogram import Client,filters
 from pyrogram.types import InlineKeyboardMarkup,InlineKeyboardButton
 from os import environ, remove
@@ -12,6 +13,9 @@ import bypasser
 import freewall
 from time import time
 
+
+
+logging.basicConfig(level=logging.INFO)
 
 # bot
 with open('config.json', 'r') as f: DATA = load(f)
