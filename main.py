@@ -132,7 +132,7 @@ def send_start(client: pyrogram.client.Client, message: pyrogram.types.messages_
         message.reply_text("😈ʏᴏᴜ ᴍᴜsᴛ ᴊᴏɪɴ ᴍʏ ᴄʜᴀɴɴᴇʟ ᴛᴏ ᴜsᴇ ᴍᴇ😈.", reply_markup=reply_markup)
         return 
         
-    await app.send_message(message.chat.id, f"__👋 Hi **{message.from_user.mention}**, i am Link Bypasser Bot, just send me any supported links and i will you get you results.\nCheckout /help to Read More__",
+    app.send_message(message.chat.id, f"__👋 Hi **{message.from_user.mention}**, i am Link Bypasser Bot, just send me any supported links and i will you get you results.\nCheckout /help to Read More__",
     reply_markup=InlineKeyboardMarkup([
         [ InlineKeyboardButton("🌐 Source Code", url="https://t.me/+PBumvx-e43I4ZTE1")],
         [ InlineKeyboardButton("MAIN CHANNEL", url="https://t.me/+PBumvx-e43I4ZTE1") ]]), 
