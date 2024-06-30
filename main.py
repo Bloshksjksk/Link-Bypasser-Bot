@@ -147,7 +147,7 @@ def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_a
         reply_markup = InlineKeyboardMarkup([[join_button]])
         message.reply_text("😈ʏᴏᴜ ᴍᴜsᴛ ᴊᴏɪɴ ᴍʏ ᴄʜᴀɴɴᴇʟ ᴛᴏ ᴜsᴇ ᴍᴇ😈.", reply_markup=reply_markup)
         return 
-    await app.send_message(message.chat.id, HELP_TEXT, reply_to_message_id=message.id, disable_web_page_preview=True)
+    app.send_message(message.chat.id, HELP_TEXT, reply_to_message_id=message.id, disable_web_page_preview=True)
 
 
 # links
