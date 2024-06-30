@@ -108,7 +108,7 @@ def loopthread(message,otherss=False):
         app.send_message(message.chat.id, f"__Failed to Bypass : {e}__", reply_to_message_id=message.id)
         
 
-def is_member(client, user_id):
+def is_user_member(client, user_id):
     try:
         member = client.get_chat_member(fsub_id, user_id)
         logging.info(f"User {user_id} membership status: {member.status}")
@@ -126,6 +126,8 @@ def is_member(client, user_id):
 # start command
 @app.on_message(filters.command(["start"]))
 def send_start(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+    user_id = message.from_user.id
+    is_member = is_user_member(client, user_id)
     if not is_member:
         join_button = InlineKeyboardButton("ᴊᴏɪɴ ❤️🚀", url="https://t.me/movie_time_botonly") #add your force subchannel url
         reply_markup = InlineKeyboardMarkup([[join_button]])
@@ -142,6 +144,8 @@ def send_start(client: pyrogram.client.Client, message: pyrogram.types.messages_
 # help command
 @app.on_message(filters.command(["help"]))
 def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+    user_id = message.from_user.id
+    is_member = is_user_member(client, user_id)
     if not is_member:
         join_button = InlineKeyboardButton("ᴊᴏɪɴ ❤️🚀", url="https://t.me/movie_time_botonly") #add your force subchannel url
         reply_markup = InlineKeyboardMarkup([[join_button]])
@@ -153,6 +157,8 @@ def send_help(client: pyrogram.client.Client, message: pyrogram.types.messages_a
 # links
 @app.on_message(filters.text)
 def receive(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+    user_id = message.from_user.id
+    is_member = is_user_member(client, user_id)
     if not is_member:
         join_button = InlineKeyboardButton("ᴊᴏɪɴ ❤️🚀", url="https://t.me/movie_time_botonly") #add your force subchannel url
         reply_markup = InlineKeyboardMarkup([[join_button]])
@@ -164,6 +170,8 @@ def receive(client: pyrogram.client.Client, message: pyrogram.types.messages_and
 
 # doc thread
 def docthread(message):
+    user_id = message.from_user.id
+    is_member = is_user_member(client, user_id)
     if not is_member:
         join_button = InlineKeyboardButton("ᴊᴏɪɴ ❤️🚀", url="https://t.me/movie_time_botonly") #add your force subchannel url
         reply_markup = InlineKeyboardMarkup([[join_button]])
@@ -181,6 +189,8 @@ def docthread(message):
 # files
 @app.on_message([filters.document,filters.photo,filters.video])
 def docfile(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+    user_id = message.from_user.id
+    is_member = is_user_member(client, user_id)
     if not is_member:
         join_button = InlineKeyboardButton("ᴊᴏɪɴ ❤️🚀", url="https://t.me/movie_time_botonly") #add your force subchannel url
         reply_markup = InlineKeyboardMarkup([[join_button]])
